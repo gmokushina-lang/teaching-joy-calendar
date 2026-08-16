@@ -1,0 +1,21 @@
+node_modules/
+dist/
+.env.local
+.firebase/
+firebase-debug.log
+*.local
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+
+# Локальные референсы и черновые варианты дизайна
+/concepts/
+/references/
+/public/final-book-design.png
+/public/progress-castle.png
+/public/progress-dragon.png
+/public/progress-map-clean.png
+/public/progress-map-transparent.png
+/public/progress-map.png
+/public/progress-owl.png
+/public/progress-tree.png

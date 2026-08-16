@@ -1,0 +1,442 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap');
+
+:root {
+  font-family: 'Manrope', sans-serif;
+  color: #2d1b12;
+  background: #100906;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, a { font: inherit; }
+button { cursor: pointer; }
+
+.auth-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #3b2417;
+  background:
+    radial-gradient(circle at 72% 35%, #713fb15c, transparent 24%),
+    linear-gradient(#140b07b8, #170c08e8),
+    url('/neo-reference.png') center / cover;
+}
+.auth-card {
+  width: min(430px, 100%);
+  padding: 34px 42px;
+  text-align: center;
+  border: 10px solid #362116;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #f7e8c3, #e6c88f);
+  box-shadow: 0 26px 80px #000d, inset 0 0 0 2px #9a7042;
+}
+.auth-card > img { width: 104px; height: 104px; object-fit: cover; border-radius: 50%; border: 3px solid #d39c4f; box-shadow: 0 0 0 4px #5a3378, 0 0 22px #743cb4; }
+.auth-card .eyebrow { display: block; margin-top: 18px; color: #704aa2; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.auth-card h1 { margin: 4px 0; font: 700 42px 'Cormorant Garamond', serif; }
+.auth-card > p { margin: 5px 0 24px; color: #6e5948; line-height: 1.5; }
+.auth-card form { display: grid; gap: 15px; text-align: left; }
+.auth-card label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; }
+.auth-card input { width: 100%; padding: 12px 14px; border: 1px solid #9a7448; border-radius: 9px; color: #352116; background: #fff8e8; outline: none; }
+.auth-card input:focus { border-color: #7650ad; box-shadow: 0 0 0 3px #8e64c52b; }
+.auth-card small { display: block; margin-top: 24px; color: #725f4e; }
+.auth-error { padding: 10px 12px; color: #8d211b; background: #ffe0d7; border: 1px solid #ce7466; border-radius: 8px; font-size: 13px; }
+.loading-card { display: flex; align-items: center; justify-content: center; gap: 12px; }
+
+.app-shell {
+  min-height: 100vh;
+  padding: 0;
+  background:
+    radial-gradient(circle at 84% 85%, #391851 0, transparent 15%),
+    linear-gradient(#0f0906dd, #170d08f0),
+    url('/neo-reference.png') center/cover fixed;
+}
+
+.exact-desktop {
+  position: relative;
+  width: min(100vw, 177.78vh);
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  overflow: hidden;
+  background: #100906;
+  box-shadow: 0 0 70px #000;
+}
+.exact-desktop > img { width: 100%; height: 100%; display: block; object-fit: contain; }
+.exact-desktop > .exact-avatar {
+  position: absolute;
+  z-index: 2;
+  top: 1.7%;
+  right: 2.55%;
+  width: 5.35%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: 50% 38%;
+  border-radius: 50%;
+  border: 2px solid #f0bd60;
+  box-shadow: 0 0 0 3px #4d286f, 0 0 16px #ad6cff;
+}
+.desktop-time-controls { position: absolute; z-index: 5; top: 1.25%; right: 13%; width: 8.5%; height: 6.4%; display: grid; place-content: center; text-align: center; padding: 3px 10px; color: #f8e6bf; background: #130b07f2; border: 1px solid #7f5930; border-radius: 11px; box-shadow: 0 3px 12px #000b; }
+.desktop-time-controls span { color: #d9ba83; font-size: clamp(6px, .58vw, 10px); }
+.desktop-time-controls strong { font: 700 clamp(11px, 1.35vw, 24px) 'Cormorant Garamond', serif; line-height: 1; }
+.desktop-time-controls small { color: #c79bf2; font-size: clamp(6px, .5vw, 9px); white-space: nowrap; }
+.desktop-time-controls button { display: grid; place-items: center; padding: 0; border: 0; color: #f1d4a2; background: transparent; }
+.desktop-time-controls button:hover { color: #b984ff; }
+.desktop-time-controls button svg { width: 100%; }
+.hotspot { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: 10px; color: transparent; background: transparent; }
+.hotspot:hover, .hotspot:focus-visible { outline: 3px solid #a46fff; outline-offset: 2px; background: #8b54df1c; }
+.logout-button { position: absolute; z-index: 6; right: 3.45%; top: 9.1%; display: grid; place-items: center; width: clamp(24px, 2vw, 36px); aspect-ratio: 1; padding: 0; border: 1px solid #b98b55; border-radius: 50%; color: #f7dfb4; background: #1b0f0be8; box-shadow: 0 2px 8px #0008, inset 0 0 7px #c38d4a33; }
+.logout-button svg { width: 48%; height: 48%; }
+.logout-button:hover { color: white; border-color: #d5a96f; background: #351b12; }
+.admin-button { position: absolute; z-index: 6; right: 7.5%; top: 2.1%; padding: 6px 13px; border: 1px solid #c18bff; border-radius: 14px; color: white; background: #512885e8; font-size: clamp(8px, .68vw, 12px); box-shadow: 0 0 12px #8e50d777; }
+.account-badge { position: absolute; z-index: 3; right: 7.8%; top: 8.1%; display: grid; min-width: 128px; padding: 5px 10px; text-align: right; color: #f7e7c4; text-shadow: 0 1px 4px #000; background: #160d08d9; border: 1px solid #9f713b; border-radius: 14px; box-shadow: 0 4px 12px #0008; }
+.account-badge strong { font: 700 14px 'Cormorant Garamond', serif; }
+.account-badge span { font-size: 7px; color: #deb66f; letter-spacing: .04em; }
+.mobile-logout { display: none; }
+.month-prev { left: 17.4%; top: 12.5%; width: 4.7%; height: 6.2%; }
+.month-next { left: 42.7%; top: 12.5%; width: 4.7%; height: 6.2%; }
+.avatar-hotspot { right: 2.2%; top: 1.3%; width: 5.2%; height: 8.5%; border-radius: 50%; }
+.booking-hotspot { right: 6.8%; top: 66.5%; width: 17%; height: 7.2%; }
+.lesson-hotspot { left: 39.8%; top: 30.8%; width: 8.5%; height: 8.5%; }
+.subscription-nav-hotspot { left: 23.2%; top: 1.5%; width: 10.2%; height: 6.5%; }
+.subscription-page-hotspot { right: 7.2%; top: 11.5%; width: 17.8%; height: 54%; }
+.desktop-subscription-live { position: absolute; z-index: 4; right: 7.1%; top: 10.8%; width: 18.1%; height: 76.5%; display: flex; flex-direction: column; align-items: center; padding: 2.4% 1.35% 1%; text-align: center; color: #3c2618; background: linear-gradient(90deg, #e6c68df5, #f4ddabfa 18%, #e9ca91f8); border-left: 1px solid #9a7243aa; border-radius: 4px 17px 16px 4px; box-shadow: inset 10px 0 18px #79512c22; cursor: pointer; }
+.desktop-subscription-live h2 { margin: 0 0 2%; font: 700 clamp(15px, 1.55vw, 28px) 'Cormorant Garamond', serif; }
+.desktop-subscription-live > span { margin-top: 1%; font: 600 clamp(8px, .72vw, 13px) 'Cormorant Garamond', serif; }
+.desktop-subscription-live > strong { margin: 0 0 1.5%; font: 700 clamp(13px, 1.25vw, 23px) 'Cormorant Garamond', serif; }
+.desktop-subscription-live > b { color: #6c2da1; font: 700 clamp(26px, 3vw, 52px) 'Cormorant Garamond', serif; line-height: 1; }
+.desktop-subscription-live > small { margin-top: 10%; font: 600 clamp(7px, .67vw, 12px) 'Cormorant Garamond', serif; }
+.desktop-subscription-live > p { font: 600 clamp(10px, 1vw, 18px) 'Cormorant Garamond', serif; }
+.desktop-subscription-live > button { width: 90%; margin-top: auto; padding: 5% 4%; border: 1px solid #9e68d1; border-radius: 10px; color: #fff4df; background: linear-gradient(#7042a8, #4b237d); box-shadow: 0 3px 8px #3b1d55aa, inset 0 0 9px #a675e0; font: 700 clamp(10px, 1.05vw, 19px) 'Cormorant Garamond', serif; }
+.live-subscription-track { width: 90%; height: clamp(8px, 1.25vw, 20px); padding: 3px; overflow: hidden; border: 1px solid #8152b4; border-radius: 999px; background: #69399a; box-shadow: 0 0 9px #8a51de88, inset 0 1px 4px #2a174b; }
+.live-subscription-track i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #28d8ff, #4ca7ff 55%, #a56aff); box-shadow: 0 0 8px #36ceff; transition: width .55s ease; }
+.subscription-journey { --journey-progress: 0%; position: relative; width: 100%; flex: 1 1 auto; min-height: 0; margin: 0; padding: 0 1%; overflow: visible; }
+.subscription-journey img { width: 100%; height: 100%; display: block; object-fit: contain; object-position: center top; filter: saturate(.92) contrast(.96); }
+.journey-check { position: absolute; z-index: 2; display: grid; place-items: center; width: clamp(18px, 1.65vw, 30px); aspect-ratio: 1; transform: translate(-50%, 50%); border: 2px solid #ffe184; border-radius: 50%; color: white; background: radial-gradient(circle, #16c7f2 12%, #087eae 58%, #15335e); box-shadow: 0 0 7px #47e6ff, 0 0 13px #7656ff; transition: left .55s ease, bottom .55s ease; }
+.journey-check svg { width: 65%; height: 65%; stroke-width: 4; }
+.journey-count { position: absolute; z-index: 3; left: 50%; bottom: 1.5%; width: max-content; max-width: 92%; margin: 0 !important; padding: 2px 7px; transform: translateX(-50%); border: 1px solid #e2b95b; border-radius: 999px; color: #fff1c6; background: #25132dcc; box-shadow: 0 1px 5px #0008; font: 700 clamp(7px, .58vw, 11px) 'Cormorant Garamond', serif !important; }
+.desktop-live-calendar { position: absolute; z-index: 2; left: 8.6%; top: 11.2%; width: 63.4%; height: 72.8%; padding: 1.2% 2.1% .5%; overflow: hidden; color: #3b2416; background: transparent; }
+.desktop-live-calendar::after { content: ''; position: absolute; z-index: 3; top: 1%; bottom: 2%; left: 63.4%; width: 1px; pointer-events: none; background: #6c462829; box-shadow: 0 0 10px #6b482744; }
+.desktop-calendar-toolbar { height: 11%; display: flex; align-items: center; justify-content: center; gap: 7%; }
+.desktop-calendar-toolbar h1 { min-width: 34%; margin: 0; text-align: center; font: 700 clamp(18px, 2.15vw, 40px) 'Cormorant Garamond', serif; }
+.desktop-calendar-toolbar h1 span { font-weight: 500; }
+.desktop-calendar-toolbar button { display: grid; place-items: center; width: clamp(28px, 3vw, 52px); aspect-ratio: 1.25; border: 1px solid #8e6639; border-radius: 8px; color: #442a18; background: #e7c589; box-shadow: inset 0 0 7px #fff6cf, 0 2px 4px #5f3b2455; }
+.desktop-calendar-toolbar button svg { width: 55%; }
+.desktop-calendar-pages { height: 82%; display: grid; grid-template-columns: 63.4% 36.6%; }
+.desktop-calendar-page { min-width: 0; padding: 0 1.5%; }
+.desktop-calendar-page.left { padding-right: 3.2%; }
+.desktop-calendar-page.right { padding-left: 11%; padding-right: .5%; }
+.desktop-weekdays { height: 7.3%; display: grid; align-items: center; text-align: center; font: 700 clamp(10px, .92vw, 17px) 'Cormorant Garamond', serif; border-bottom: 1px solid #8b633d42; }
+.desktop-calendar-page.left .desktop-weekdays, .desktop-calendar-page.left .desktop-month-grid { grid-template-columns: repeat(4, 1fr); }
+.desktop-calendar-page.right .desktop-weekdays, .desktop-calendar-page.right .desktop-month-grid { grid-template-columns: repeat(3, 1fr); }
+.desktop-weekdays span:last-child { color: #a12b22; }
+.desktop-calendar-page.left .desktop-weekdays span:last-child { color: inherit; }
+.desktop-month-grid { height: 92.7%; display: grid; grid-template-rows: repeat(6, 1fr); }
+.desktop-day { position: relative; min-width: 0; padding: 3px 5px; overflow: hidden; border-right: 1px solid #8d673f35; border-bottom: 1px solid #8d673f35; }
+.day-click-target { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; }
+.day-click-target:hover, .day-click-target:focus-visible { outline: 1px solid #7441a4; outline-offset: -2px; background: #8c55ba12; }
+.desktop-day time, .day time { position: relative; z-index: 1; pointer-events: none; }
+.desktop-calendar-page.left .desktop-day:nth-child(4n), .desktop-calendar-page.right .desktop-day:nth-child(3n) { border-right: 0; }
+.desktop-day time { display: block; font: 700 clamp(10px, 1.15vw, 20px) 'Cormorant Garamond', serif; }
+.desktop-day.outside { opacity: .38; }
+.desktop-day.sunday time { color: #aa2d25; }
+.desktop-lesson { position: relative; z-index: 2; width: 100%; min-height: 40%; margin-top: 0; padding: 4px 7px 4px clamp(28px, 2.25vw, 43px); overflow: hidden; text-align: left; white-space: nowrap; border: 0; border-radius: 0; color: #352117; background: url('/lesson-frame-completed.png') center / 100% 100% no-repeat; filter: drop-shadow(0 2px 2px #59371555); }
+.desktop-lesson::before, .desktop-lesson::after { content: none; }
+.desktop-lesson strong, .desktop-lesson span { display: block; overflow: hidden; text-overflow: ellipsis; font-size: clamp(7px, .67vw, 12px); line-height: 1.05; }
+.desktop-lesson:hover { filter: brightness(1.06) drop-shadow(0 2px 4px #512d6e88); }
+.desktop-lesson.completed { color: #302116; background-image: url('/lesson-frame-upcoming.png'); filter: drop-shadow(0 2px 3px #51305655); }
+.lesson.completed { border-color: #36835d; background: #d7efdc; }
+.completed-mark { color: #1f704d !important; font-weight: 800; }
+.more-lessons { font-size: clamp(6px, .5vw, 9px); color: #6a3c85; }
+.desktop-live-calendar > p { height: 7%; margin: 0; display: grid; place-items: center; font: 600 clamp(8px, .8vw, 14px) 'Cormorant Garamond', serif; }
+.day .lesson { position: relative; z-index: 2; }
+.date-modal > svg { color: #7040a0; }
+.subscriptions-modal { width: min(560px, 100%); }
+.subscriptions-modal > svg { color: #7441a4; }
+.subscription-modal-list { display: grid; gap: 9px; max-height: 310px; margin: 18px 0; overflow: auto; text-align: left; }
+.subscription-modal-list article { display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center; padding: 12px 14px; border: 1px solid #a47a49; border-radius: 10px; background: #f8e6bc; }
+.subscription-modal-list article > div { display: grid; }
+.subscription-modal-list article span, .subscription-modal-list article time, .subscription-modal-list article small { color: #715945; font-size: 11px; }
+.subscription-modal-list article b { color: #6c329e; font-size: 22px; }
+.live-lessons-badge { position: absolute; z-index: 3; left: 7.7%; bottom: 2.2%; display: flex; align-items: baseline; gap: 6px; padding: 5px 10px; border: 1px solid #a87a43; border-radius: 12px; color: #f7dfb4; background: #1b0f0bd9; box-shadow: 0 3px 12px #0009; }
+.live-lessons-badge strong { color: #b982ff; font-size: 15px; }
+.live-lessons-badge span { font-size: 9px; }
+.functional-layout { display: none; }
+
+.hero {
+  position: relative;
+  height: 112px;
+  margin: 0 -2.5vw;
+  padding: 14px 3vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: #fff3cf;
+  background: #170d08;
+  border-bottom: 1px solid #9e6d2f;
+  box-shadow: 0 8px 24px #0009;
+}
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  width: 52%;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero::before {
+  left: 0;
+  background:
+    linear-gradient(90deg, #0d0804b8, transparent 76%),
+    url('/neo-reference.png') left 42% / 300% auto no-repeat;
+}
+.hero::after {
+  right: 0;
+  background:
+    linear-gradient(270deg, #0d0804a6, transparent 78%),
+    url('/neo-reference.png') right 42% / 300% auto no-repeat;
+}
+.hero > * { position: relative; z-index: 1; }
+
+.nav, .time-controls { display: flex; align-items: center; gap: 11px; }
+.nav-link {
+  display: flex; align-items: center; gap: 7px;
+  color: #f8e8c7; text-decoration: none;
+  padding: 9px 12px; border-bottom: 2px solid transparent;
+  text-shadow: 0 1px 4px #000;
+}
+.nav-link.active { border-color: #e2b267; color: white; }
+.time-controls { margin-left: auto; padding: 2px 0 0 16px; }
+.time-controls button, .round {
+  border: 1px solid #9c7144; color: #ffe9bd; background: #1d110cd9;
+  width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+}
+.time-block { display: grid; text-align: center; line-height: 1.05; }
+.time-block span { font-size: 11px; opacity: .78; }
+.time-block strong { font: 600 24px/1 'Cormorant Garamond', serif; }
+.zone-label { font-size: 12px; min-width: 46px; text-align: center; }
+.avatar { width: 58px; height: 58px; object-fit: cover; border-radius: 50%; border: 2px solid #e4ad55; box-shadow: 0 0 0 3px #522d70, 0 0 18px #9e59ed; }
+
+.book {
+  position: relative;
+  max-width: 1540px;
+  min-height: calc(100vh - 178px);
+  margin: -20px auto 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  border: 13px solid #342016;
+  border-radius: 38px 24px 30px 42px;
+  box-shadow: 0 20px 50px #000d, inset 0 0 0 3px #7d512d, 0 5px 0 #160c07;
+  background: #d8b980;
+  overflow: hidden;
+}
+.book::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: calc((100% - 280px) / 2);
+  width: 34px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #6f451a2c 28%, #2a170b48 48%, #fff2c32b 57%, transparent);
+  border-radius: 50%;
+}
+.book::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .2; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.55' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E"); }
+
+.bookmarks { position: absolute; z-index: 5; top: 128px; display: grid; gap: 22px; pointer-events: none; }
+.bookmarks span { width: 58px; height: 54px; display: grid; place-items: center; color: #e7c376; font: 700 27px 'Cormorant Garamond', serif; background: linear-gradient(135deg, #56317f, #2a1742); border: 2px solid #8e623b; box-shadow: 0 5px 8px #0008; }
+.left-bookmarks { left: -47px; }
+.left-bookmarks span { border-radius: 9px 3px 3px 9px; }
+.right-bookmarks { right: -47px; }
+.right-bookmarks span { border-radius: 3px 9px 9px 3px; }
+.bookmarks span:nth-child(even) { background: linear-gradient(135deg, #8b5b32, #422817); }
+
+.calendar-page, .subscription { position: relative; z-index: 1; background: linear-gradient(100deg, #ead4a4, #fbefcf 48%, #e4c891); }
+.calendar-page {
+  padding: 20px 28px 12px;
+  box-shadow: inset 16px 0 26px #5b351522, inset -18px 0 25px #5e37172d;
+  background:
+    linear-gradient(90deg, transparent 49.1%, #6f46151f 49.7%, #fff3cb55 50.2%, transparent 51%),
+    radial-gradient(ellipse at 50% 105%, #fff7dc 0, transparent 58%),
+    linear-gradient(100deg, #ead4a4, #fbefcf 48%, #e4c891);
+}
+.calendar-toolbar { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 8px; }
+.calendar-toolbar h1 { margin: 0; min-width: 260px; text-align: center; font: 700 clamp(29px, 3vw, 46px)/1 'Cormorant Garamond', serif; }
+.calendar-toolbar h1 span { font-weight: 500; }
+.round { color: #3d2517; background: #edd6a6; box-shadow: 0 3px 0 #8f633b; }
+.today { position: absolute; right: 25px; border: 1px solid #a47747; background: #f7e6c2; color: #5b331b; border-radius: 20px; padding: 8px 14px; }
+
+.weekdays, .month-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.weekdays span { text-align: center; font: 700 20px 'Cormorant Garamond', serif; padding: 5px; }
+.month-grid { height: calc(100vh - 298px); min-height: 440px; border: 1px solid #96714566; border-radius: 12px; overflow: hidden; }
+.day { position: relative; min-width: 0; padding: 7px; border-right: 1px solid #96714555; border-bottom: 1px solid #96714555; }
+.day time { font: 700 20px 'Cormorant Garamond', serif; }
+.day.outside { opacity: .32; }
+.day.sunday time { color: #aa2d23; }
+.lesson { width: 100%; margin-top: 5px; padding: 5px 7px; display: grid; gap: 1px; text-align: left; color: #3d2419; background: linear-gradient(135deg, #ede0bd, #dcc48f); border: 1px solid #987347; border-radius: 8px; box-shadow: 0 2px 4px #6e43151c; }
+.lesson strong { font-size: 11px; }
+.lesson span { font: 600 12px 'Cormorant Garamond', serif; }
+.lesson small { display: flex; align-items: center; gap: 3px; color: #72512d; font-size: 8px; }
+.book-quote { margin: 8px 0 0; display: flex; justify-content: center; align-items: center; gap: 9px; font: 600 17px 'Cormorant Garamond', serif; }
+
+.subscription { padding: 38px 24px 20px; text-align: center; border-left: 5px double #9d7446; box-shadow: inset 16px 0 24px #5a341d25, inset -15px 0 24px #6d421f21; }
+.subscription h2 { margin: 0 0 18px; font: 700 27px 'Cormorant Garamond', serif; }
+.subscription-card { min-height: 330px; padding: 28px 20px; display: flex; flex-direction: column; align-items: center; border: 2px solid #a67a45; border-radius: 48% 48% 18px 18px / 18% 18% 18px 18px; }
+.subscription-card > span { font: 600 17px 'Cormorant Garamond', serif; }
+.subscription-card > strong { font: 700 34px 'Cormorant Garamond', serif; }
+.subscription-card > b { font: 700 38px 'Cormorant Garamond', serif; color: #5827a3; }
+.subscription-card small { margin-top: 20px; font: 500 15px/1.3 'Cormorant Garamond', serif; }
+.progress { width: 100%; height: 12px; margin: 22px 0; border-radius: 20px; background: #a98dba55; overflow: hidden; box-shadow: 0 0 10px #6ad8ff; }
+.progress i { display: block; width: 50%; height: 100%; background: linear-gradient(90deg, #21d8ff, #7431dd); }
+.primary { width: 100%; margin-top: 16px; padding: 13px 20px; border: 1px solid #bc82ff; border-radius: 9px; color: white; background: linear-gradient(#7446bd, #45207f); box-shadow: 0 4px 0 #2d1555, 0 0 14px #9a59dc66; font: 700 22px 'Cormorant Garamond', serif; }
+.subscription p { font: 600 15px/1.45 'Cormorant Garamond', serif; }
+.spark { color: #6936af; }
+.spark-one { position: absolute; right: 20px; top: 16px; }
+
+footer { max-width: 1500px; margin: 9px auto 0; display: flex; align-items: center; gap: 30px; color: #f2dab2; font: 600 16px 'Cormorant Garamond', serif; }
+footer span { display: flex; align-items: center; gap: 7px; }
+footer em { margin-left: auto; padding: 8px 18px; color: #3b2011; background: #d9b77e; border-radius: 5px; font-style: normal; }
+.status { width: 18px; height: 18px; display: inline-block; border-radius: 50%; }
+.confirmed { border: 2px solid #4cca6b; }
+.online { border-radius: 3px; background: #7950d7; }
+
+.modal-backdrop { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 20px; background: #090406b8; backdrop-filter: blur(5px); }
+.modal { position: relative; width: min(430px, 100%); max-height: 88vh; padding: 35px; overflow: auto; text-align: center; border: 8px solid #3b2415; border-radius: 22px; color: #3b2518; background: #f2dfb4; box-shadow: 0 25px 80px #000; }
+.modal h2 { font: 700 32px 'Cormorant Garamond', serif; }
+.modal .muted { color: #6f5944; line-height: 1.6; }
+.calendar-lesson-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin: 15px 0; }
+.calendar-lesson-actions button { padding: 8px 12px; border: 1px solid #75469b; border-radius: 8px; color: #4e286e; background: #eadcf5; }
+.calendar-complete-form, .calendar-move-form { display: grid; gap: 9px; margin-top: 14px; text-align: left; }
+.calendar-complete-form label, .calendar-move-form label { display: grid; gap: 4px; font-size: 11px; font-weight: 700; }
+.calendar-complete-form textarea, .calendar-move-form input { width: 100%; padding: 8px 10px; resize: vertical; border: 1px solid #987044; border-radius: 7px; color: #382316; background: #fff8e8; }
+.lesson-results { display: grid; gap: 8px; margin: 16px 0 4px; text-align: left; }
+.lesson-results section { padding: 10px 12px; border: 1px solid #b68a55; border-radius: 9px; background: #fff1cf; }
+.lesson-results strong { color: #5d2e7d; font: 700 15px 'Cormorant Garamond', serif; }
+.lesson-results p { margin: 4px 0 0; white-space: pre-wrap; font-size: 12px; line-height: 1.35; }
+.close { position: absolute; top: 12px; right: 12px; border: 0; background: transparent; color: #4b2f1e; }
+.toast { position: fixed; z-index: 20; right: 25px; bottom: 25px; display: flex; gap: 14px; align-items: center; max-width: 360px; padding: 16px 18px; color: white; background: #4e2781; border: 1px solid #bd87ff; border-radius: 12px; box-shadow: 0 10px 40px #0009; }
+.profile-toast { bottom: 90px; background: #792d32; border-color: #e88f87; }
+
+.admin-backdrop { position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 24px; background: #080405d4; backdrop-filter: blur(8px); }
+.admin-panel { width: min(1040px, 100%); max-height: 90vh; overflow: auto; color: #342116; background: #f2dfb5; border: 9px solid #352116; border-radius: 24px; box-shadow: 0 30px 90px #000; }
+.admin-panel > header { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 20px 26px; color: #f6e4bd; background: linear-gradient(90deg, #27150d, #492865); border-bottom: 2px solid #b18349; }
+.admin-panel > header span { color: #d9ae68; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.admin-panel > header h2 { margin: 0; font: 700 32px 'Cormorant Garamond', serif; }
+.admin-panel > header button, .student > button { display: grid; place-items: center; border: 0; color: inherit; background: transparent; }
+.admin-content { display: grid; grid-template-columns: 340px 1fr; gap: 18px 22px; padding: 24px; }
+.student-form { display: grid; align-content: start; gap: 14px; padding: 20px; background: #e4c894; border: 1px solid #9c7444; border-radius: 16px; }
+.student-form h3 { margin: 0; display: flex; align-items: center; gap: 7px; font: 700 23px 'Cormorant Garamond', serif; }
+.student-form label { display: grid; gap: 5px; font-size: 12px; font-weight: 700; }
+.student-form input, .student-form textarea { width: 100%; padding: 10px 12px; border: 1px solid #9c7444; border-radius: 8px; color: #342116; background: #fff8e8; resize: vertical; }
+.student-form select { width: 100%; padding: 10px 12px; border: 1px solid #9c7444; border-radius: 8px; color: #342116; background: #fff8e8; }
+.subscription-form { grid-column: 1; }
+.paid-check { display: flex !important; grid-template-columns: auto 1fr; align-items: center; gap: 8px !important; }
+.paid-check input { width: 18px; height: 18px; accent-color: #67359b; }
+.admin-primary { padding: 11px 16px; border: 1px solid #a875e3; border-radius: 9px; color: white; background: linear-gradient(#7045ad, #482274); box-shadow: 0 3px 0 #30164e; }
+.admin-primary:disabled { opacity: .55; }
+.student-list { min-width: 0; }
+.student-list { grid-row: 1 / span 2; grid-column: 2; }
+.list-heading { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid #a78356; }
+.list-heading h3 { margin: 0; font: 700 26px 'Cormorant Garamond', serif; }
+.list-heading span { color: #73533a; font-size: 12px; }
+.student { display: grid; grid-template-columns: 42px 1fr 38px; gap: 12px; align-items: start; padding: 16px 8px; border-bottom: 1px solid #a7835655; }
+.student-icon { width: 40px; height: 40px; display: grid; place-items: center; color: #7042a8; background: #dfc4a0; border-radius: 50%; }
+.student div { display: grid; gap: 2px; }
+.student strong { font: 700 20px 'Cormorant Garamond', serif; }
+.student small { color: #755d49; }
+.student p { margin: 5px 0 0; color: #584536; font-size: 12px; }
+.student > button { color: #775937; width: 36px; height: 36px; border-radius: 50%; }
+.student > button:hover { background: #dec397; }
+.student.archived { opacity: .48; }
+.admin-error { padding: 10px; color: #87251d; background: #f6cfc2; border-radius: 8px; }
+.empty-state { padding: 50px 20px; text-align: center; color: #765d47; }
+.empty-state.compact { padding: 22px; }
+.subscriptions-heading { margin-top: 28px; }
+.subscription-row { display: grid; grid-template-columns: minmax(120px, 1fr) 54px 90px 84px 34px; gap: 10px; align-items: center; padding: 13px 8px; border-bottom: 1px solid #a7835655; }
+.subscription-row > div:first-child { display: grid; }
+.subscription-row strong { font: 700 18px 'Cormorant Garamond', serif; }
+.subscription-row span, .subscription-row small { font-size: 10px; color: #6d543e; }
+.delete-subscription { display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid #a86d5c; border-radius: 8px; background: #fff4d9; color: #8d3029; cursor: pointer; }
+.delete-subscription:hover { background: #f4d1c5; }
+.lesson-form { grid-column: 1; }
+.lesson-admin-row { display: grid; grid-template-columns: minmax(150px, 1fr) 130px; gap: 9px 12px; align-items: center; padding: 13px 8px; border-bottom: 1px solid #a7835655; }
+.lesson-admin-row > div:first-child { display: grid; }
+.lesson-admin-row strong { font: 700 18px 'Cormorant Garamond', serif; }
+.lesson-admin-row span, .lesson-admin-row time { font-size: 11px; color: #6d543e; }
+.lesson-delete-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 5px; }
+.lesson-delete-actions button { display: inline-flex; align-items: center; gap: 4px; padding: 6px 8px; border: 1px solid #9c7444; border-radius: 7px; background: #fff4d9; color: #583b27; font-size: 10px; cursor: pointer; }
+.lesson-delete-actions button:hover { background: #f1d5a4; }
+.lesson-status-actions, .lesson-delete-actions { grid-column: 1 / -1; display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 5px; }
+.lesson-status-actions button { display: inline-flex; align-items: center; gap: 4px; padding: 7px 9px; border: 1px solid #79549e; border-radius: 7px; color: #4a2a68; background: #eee0f8; font-size: 10px; cursor: pointer; }
+.lesson-status-actions button:disabled { opacity: .45; cursor: default; }
+.lesson-admin-row.completed { background: #d9edcf66; }
+.lesson-admin-row.cancelled { opacity: .62; background: #e8c5bd55; }
+.move-lesson-form { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; padding: 9px; border-radius: 8px; background: #d7b980; }
+.move-lesson-form input { flex: 1 1 190px; padding: 7px; border: 1px solid #8c663d; border-radius: 6px; background: #fff7e5; }
+.move-lesson-form button { padding: 7px 10px; border: 1px solid #704494; border-radius: 6px; color: white; background: #60318e; }
+.complete-lesson-form { grid-column: 1 / -1; display: grid; gap: 10px; padding: 14px; border: 1px solid #8b663d; border-radius: 10px; background: #ead09d; }
+.complete-lesson-form h4 { margin: 0; font: 700 20px 'Cormorant Garamond', serif; }
+.complete-lesson-form label { display: grid; gap: 4px; font-size: 11px; font-weight: 700; }
+.complete-lesson-form textarea { width: 100%; padding: 9px 10px; resize: vertical; border: 1px solid #9a7345; border-radius: 7px; color: #382316; background: #fff8e8; }
+.complete-lesson-form > div { display: flex; flex-wrap: wrap; gap: 7px; }
+.complete-lesson-form button { padding: 8px 12px; border: 1px solid #704494; border-radius: 7px; color: white; background: #60318e; }
+.complete-lesson-form button.secondary { color: #503a28; border-color: #95704a; background: #f8e7bf; }
+.credit-count { display: grid; justify-items: center; }
+.credit-count b { color: #5c2990; font-size: 21px; }
+.payment-status { padding: 5px 7px; text-align: center; border-radius: 12px; }
+.payment-status.active { color: #215f38; background: #cde8cd; }
+.payment-status.pending_payment { color: #8a4320; background: #f1d2a9; }
+
+@media (max-width: 1050px) {
+  .nav-link { font-size: 0; }
+  .hero { height: 105px; }
+  .book { grid-template-columns: 1fr 230px; }
+  .subscription { padding-inline: 14px; }
+  .today { position: static; }
+  .bookmarks { display: none; }
+}
+
+@media (max-width: 720px) {
+  .exact-desktop { display: none; }
+  .functional-layout { display: block; }
+  .mobile-logout { display: block; position: fixed; z-index: 8; right: 12px; bottom: 12px; padding: 9px 15px; color: white; background: #4e2781; border: 1px solid #c08cff; border-radius: 18px; }
+  .auth-card { padding: 28px 22px; }
+  .admin-backdrop { padding: 8px; }
+  .admin-content { grid-template-columns: 1fr; padding: 14px; }
+  .student-list, .subscription-form { grid-column: 1; grid-row: auto; }
+  .subscription-row { grid-template-columns: 1fr 50px 84px 34px; }
+  .subscription-row > small:last-child { grid-column: 1 / -1; }
+  .lesson-admin-row { grid-template-columns: 1fr; }
+  .lesson-delete-actions { justify-content: flex-start; }
+  .app-shell { padding-inline: 10px; }
+  .hero { height: 145px; margin-inline: -10px; padding: 10px; flex-direction: column; justify-content: space-between; }
+  .nav { width: 100%; justify-content: space-around; }
+  .nav-link { padding: 8px; }
+  .time-controls { width: 100%; justify-content: flex-end; padding: 0; gap: 6px; }
+  .time-block:first-child, .zone-label { display: none; }
+  .avatar { width: 46px; height: 46px; }
+  .book { margin-top: -4px; min-height: auto; display: block; border-width: 7px; }
+  .book::after { display: none; }
+  .calendar-page { padding: 16px 8px 10px; }
+  .calendar-toolbar { gap: 10px; }
+  .calendar-toolbar h1 { min-width: 0; font-size: 30px; }
+  .today { padding: 7px 10px; font-size: 12px; }
+  .weekdays span { font-size: 15px; }
+  .month-grid { height: auto; min-height: 540px; }
+  .day { padding: 4px 3px; }
+  .day time { font-size: 16px; }
+  .month-grid .day:nth-child(-n+14), .month-grid .day:nth-child(n+22) { display: none; }
+  .month-grid { grid-template-columns: repeat(7, 1fr); }
+  .lesson { padding: 4px 3px; }
+  .lesson strong { font-size: 8px; }
+  .lesson span, .lesson small { display: none; }
+  .book-quote { font-size: 14px; }
+  .subscription { border: 0; border-top: 4px double #9d7446; padding: 22px 18px; }
+  .subscription-card { min-height: 260px; }
+  footer { flex-wrap: wrap; gap: 10px 18px; font-size: 14px; }
+  footer em { width: 100%; margin: 0; text-align: center; }
+}
