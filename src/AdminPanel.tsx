@@ -17,6 +17,11 @@ import {
 import { Archive, CalendarCheck, CalendarPlus, CalendarX, MoveRight, Plus, Trash2, UserRound, X } from 'lucide-react';
 import { db } from './firebase';
 
+type HomeworkAttachment = {
+  name: string;
+  url: string;
+};
+
 type Student = {
   id: string;
   displayName: string;
@@ -47,6 +52,7 @@ type Lesson = {
   teacherComment?: string;
   materials?: string;
   homework?: string;
+  homeworkAttachments?: HomeworkAttachment[];
 };
 
 type Props = {
@@ -68,6 +74,8 @@ export function AdminPanel({ onClose }: Props) {
   const [lessonComment, setLessonComment] = useState('');
   const [lessonMaterials, setLessonMaterials] = useState('');
   const [lessonHomework, setLessonHomework] = useState('');
+  const [lessonAttachmentName, setLessonAttachmentName] = useState('');
+  const [lessonAttachmentUrl, setLessonAttachmentUrl] = useState('');
   const subscriptionLinksChecked = useRef(false);
 
   useEffect(() => {
@@ -291,17 +299,24 @@ export function AdminPanel({ onClose }: Props) {
   const completeLesson = async (lesson: Lesson) => {
     setError('');
     try {
+      const newAttachment = lessonAttachmentUrl.trim()
+        ? [{ name: lessonAttachmentName.trim() || 'Материал к домашнему заданию', url: lessonAttachmentUrl.trim() }]
+        : [];
+      const homeworkAttachments = [...(lesson.homeworkAttachments ?? []), ...newAttachment];
       if (lesson.status === 'completed') {
         await updateDoc(doc(db, 'lessons', lesson.id), {
           teacherComment: lessonComment.trim(),
           materials: lessonMaterials.trim(),
           homework: lessonHomework.trim(),
+          homeworkAttachments,
           lessonDetailsUpdatedAt: serverTimestamp(),
         });
         setCompletingLessonId(null);
         setLessonComment('');
         setLessonMaterials('');
         setLessonHomework('');
+        setLessonAttachmentName('');
+        setLessonAttachmentUrl('');
         return;
       }
       const activeSubscription = subscriptions.find((item) => item.studentId === lesson.studentId && item.status === 'active' && item.remainingLessons > 0);
@@ -312,6 +327,7 @@ export function AdminPanel({ onClose }: Props) {
         teacherComment: lessonComment.trim(),
         materials: lessonMaterials.trim(),
         homework: lessonHomework.trim(),
+        homeworkAttachments,
       });
       if (activeSubscription) {
         batch.update(doc(db, 'subscriptions', activeSubscription.id), {
@@ -323,6 +339,8 @@ export function AdminPanel({ onClose }: Props) {
       setLessonComment('');
       setLessonMaterials('');
       setLessonHomework('');
+      setLessonAttachmentName('');
+      setLessonAttachmentUrl('');
     } catch {
       setError(lesson.status === 'completed' ? 'Не удалось сохранить данные урока.' : 'Не удалось отметить урок проведённым.');
     }
@@ -333,6 +351,8 @@ export function AdminPanel({ onClose }: Props) {
     setLessonComment(lesson.teacherComment ?? '');
     setLessonMaterials(lesson.materials ?? '');
     setLessonHomework(lesson.homework ?? '');
+    setLessonAttachmentName('');
+    setLessonAttachmentUrl('');
   };
 
   const cancelLesson = async (lesson: Lesson) => {
@@ -462,6 +482,8 @@ export function AdminPanel({ onClose }: Props) {
                     <label>Комментарий после урока<textarea rows={3} value={lessonComment} onChange={(event) => setLessonComment(event.target.value)} placeholder="Тема урока и как он прошёл…" /></label>
                     <label>Материалы урока<textarea rows={2} value={lessonMaterials} onChange={(event) => setLessonMaterials(event.target.value)} placeholder="Ссылки, учебник, страницы, файлы…" /></label>
                     <label>Домашнее задание<textarea rows={3} value={lessonHomework} onChange={(event) => setLessonHomework(event.target.value)} placeholder="Что выполнить к следующему занятию…" /></label>
+                    {lesson.homeworkAttachments && lesson.homeworkAttachments.length > 0 && <div className="homework-files"><strong>Уже прикреплено</strong>{lesson.homeworkAttachments.map((file, index) => <a href={file.url} target="_blank" rel="noreferrer" key={`${file.url}-${index}`}>📎 {file.name}</a>)}</div>}
+                    <fieldset className="file-picker"><legend>Прикрепить материал по ссылке</legend><input type="text" value={lessonAttachmentName} onChange={(event) => setLessonAttachmentName(event.target.value)} placeholder="Название файла или материала" /><input type="url" value={lessonAttachmentUrl} onChange={(event) => setLessonAttachmentUrl(event.target.value)} placeholder="https://drive.google.com/…" /><small>Подойдёт ссылка с Google Диска, Яндекс Диска или другого облака.</small></fieldset>
                     <div><button onClick={() => void completeLesson(lesson)}>{lesson.status === 'completed' ? 'Сохранить изменения' : 'Сохранить и отметить проведённым'}</button><button className="secondary" onClick={() => setCompletingLessonId(null)}>Закрыть</button></div>
                   </div>
                 )}

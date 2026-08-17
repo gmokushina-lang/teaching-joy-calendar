@@ -20,6 +20,8 @@ import './styles.css';
 import { auth, db } from './firebase';
 import { AdminPanel } from './AdminPanel';
 
+type HomeworkAttachment = { name: string; url: string };
+
 type Lesson = {
   id: string;
   studentId: string;
@@ -31,6 +33,7 @@ type Lesson = {
   teacherComment?: string;
   materials?: string;
   homework?: string;
+  homeworkAttachments?: HomeworkAttachment[];
 };
 
 type UserProfile = {
@@ -95,6 +98,8 @@ function App() {
   const [actionComment, setActionComment] = useState('');
   const [actionMaterials, setActionMaterials] = useState('');
   const [actionHomework, setActionHomework] = useState('');
+  const [actionAttachmentName, setActionAttachmentName] = useState('');
+  const [actionAttachmentUrl, setActionAttachmentUrl] = useState('');
   const [actionMoveDate, setActionMoveDate] = useState('');
 
   useEffect(() => {
@@ -199,27 +204,39 @@ function App() {
 
   const completeSelectedLesson = async () => {
     if (!selected) return;
-    if (selected.status === 'completed') {
-      await updateDoc(doc(db, 'lessons', selected.id), {
-        teacherComment: actionComment.trim(),
-        materials: actionMaterials.trim(),
-        homework: actionHomework.trim(),
-        lessonDetailsUpdatedAt: serverTimestamp(),
+    try {
+      const newAttachment = actionAttachmentUrl.trim()
+        ? [{ name: actionAttachmentName.trim() || 'Материал к домашнему заданию', url: actionAttachmentUrl.trim() }]
+        : [];
+      const homeworkAttachments = [...(selected.homeworkAttachments ?? []), ...newAttachment];
+      if (selected.status === 'completed') {
+        await updateDoc(doc(db, 'lessons', selected.id), {
+          teacherComment: actionComment.trim(),
+          materials: actionMaterials.trim(),
+          homework: actionHomework.trim(),
+          homeworkAttachments,
+          lessonDetailsUpdatedAt: serverTimestamp(),
+        });
+        setSelected(null);
+        setLessonAction(null);
+        return;
+      }
+      const activeSubscription = subscriptions.find((item) => item.studentId === selected.studentId && item.status === 'active' && item.remainingLessons > 0);
+      const batch = writeBatch(db);
+      batch.update(doc(db, 'lessons', selected.id), {
+        status: 'completed', completedAt: serverTimestamp(),
+        teacherComment: actionComment.trim(), materials: actionMaterials.trim(), homework: actionHomework.trim(), homeworkAttachments,
       });
+      if (activeSubscription) batch.update(doc(db, 'subscriptions', activeSubscription.id), { remainingLessons: activeSubscription.remainingLessons - 1 });
+      await batch.commit();
       setSelected(null);
       setLessonAction(null);
-      return;
+    } catch {
+      setNotice('Не удалось сохранить домашнее задание или ссылку на материал.');
+    } finally {
+      setActionAttachmentName('');
+      setActionAttachmentUrl('');
     }
-    const activeSubscription = subscriptions.find((item) => item.studentId === selected.studentId && item.status === 'active' && item.remainingLessons > 0);
-    const batch = writeBatch(db);
-    batch.update(doc(db, 'lessons', selected.id), {
-      status: 'completed', completedAt: serverTimestamp(),
-      teacherComment: actionComment.trim(), materials: actionMaterials.trim(), homework: actionHomework.trim(),
-    });
-    if (activeSubscription) batch.update(doc(db, 'subscriptions', activeSubscription.id), { remainingLessons: activeSubscription.remainingLessons - 1 });
-    await batch.commit();
-    setSelected(null);
-    setLessonAction(null);
   };
 
   const cancelSelectedLesson = async () => {
@@ -463,7 +480,7 @@ function App() {
             <p className="muted">Статус: {selected.status === 'completed' ? 'проведён' : selected.status === 'cancelled' ? 'отменён' : 'подтверждён'}.</p>
             {profile?.role === 'admin' && (
               <div className="calendar-lesson-actions">
-                <button onClick={() => { setActionComment(selected.teacherComment ?? ''); setActionMaterials(selected.materials ?? ''); setActionHomework(selected.homework ?? ''); setLessonAction('complete'); }}>{selected.status === 'completed' ? 'Изменить итоги' : 'Проведён'}</button>
+                <button onClick={() => { setActionComment(selected.teacherComment ?? ''); setActionMaterials(selected.materials ?? ''); setActionHomework(selected.homework ?? ''); setActionAttachmentName(''); setActionAttachmentUrl(''); setLessonAction('complete'); }}>{selected.status === 'completed' ? 'Изменить итоги' : 'Проведён'}</button>
                 {selected.status !== 'completed' && <button onClick={() => setLessonAction('move')}>Перенести</button>}
                 {selected.status !== 'completed' && <button onClick={() => void cancelSelectedLesson()}>Отменить</button>}
               </div>
@@ -473,14 +490,17 @@ function App() {
                 <label>Комментарий<textarea rows={2} value={actionComment} onChange={(event) => setActionComment(event.target.value)} /></label>
                 <label>Материалы урока<textarea rows={2} value={actionMaterials} onChange={(event) => setActionMaterials(event.target.value)} /></label>
                 <label>Домашнее задание<textarea rows={2} value={actionHomework} onChange={(event) => setActionHomework(event.target.value)} /></label>
+                {selected.homeworkAttachments && selected.homeworkAttachments.length > 0 && <div className="homework-files"><strong>Уже прикреплено</strong>{selected.homeworkAttachments.map((file, index) => <a href={file.url} target="_blank" rel="noreferrer" key={`${file.url}-${index}`}>📎 {file.name}</a>)}</div>}
+                <fieldset className="file-picker"><legend>Прикрепить материал по ссылке</legend><input type="text" value={actionAttachmentName} onChange={(event) => setActionAttachmentName(event.target.value)} placeholder="Название файла или материала" /><input type="url" value={actionAttachmentUrl} onChange={(event) => setActionAttachmentUrl(event.target.value)} placeholder="https://drive.google.com/…" /><small>Google Диск, Яндекс Диск или другое облако.</small></fieldset>
                 <button className="primary" onClick={() => void completeSelectedLesson()}>{selected.status === 'completed' ? 'Сохранить изменения' : 'Сохранить и отметить проведённым'}</button>
               </div>
             )}
-            {profile?.role !== 'admin' && selected.status === 'completed' && (selected.teacherComment || selected.materials || selected.homework) && (
+            {profile?.role !== 'admin' && selected.status === 'completed' && (selected.teacherComment || selected.materials || selected.homework || selected.homeworkAttachments?.length) && (
               <div className="lesson-results">
                 {selected.teacherComment && <section><strong>Комментарий учителя</strong><p>{selected.teacherComment}</p></section>}
                 {selected.materials && <section><strong>Материалы урока</strong><p>{selected.materials}</p></section>}
                 {selected.homework && <section><strong>Домашнее задание</strong><p>{selected.homework}</p></section>}
+                {selected.homeworkAttachments && selected.homeworkAttachments.length > 0 && <section><strong>Файлы к домашнему заданию</strong><div className="homework-files">{selected.homeworkAttachments.map((file, index) => <a href={file.url} target="_blank" rel="noreferrer" key={`${file.url}-${index}`}>📎 {file.name}</a>)}</div></section>}
               </div>
             )}
             {lessonAction === 'move' && (
